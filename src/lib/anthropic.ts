@@ -12,3 +12,10 @@ export function isMockMode() {
   return !apiKey();
 }
 
+let client: Anthropic | null = null;
+export function getClient() {
+  const key = apiKey();
+  if (!key) throw new Error("Anthropic client is unavailable in mock mode.");
+  client ??= new Anthropic({ apiKey: key, maxRetries: 2 });
+  return client;
+}
