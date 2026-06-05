@@ -26,3 +26,10 @@ export function friendlyError(err: unknown): { status: number; message: string }
     return { status: 429, message: "The AI service is busy right now. Try again in a minute." };
   }
   if (err instanceof Anthropic.AuthenticationError) {
+    return { status: 500, message: "The server's API key is not valid." };
+  }
+  if (err instanceof Anthropic.BadRequestError) {
+    return { status: 400, message: "The request was rejected. Try shorter or simpler notes." };
+  }
+  if (err instanceof Anthropic.APIConnectionError) {
+    return { status: 503, message: "Couldn't reach the AI service. Check the connection and retry." };
