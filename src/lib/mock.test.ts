@@ -49,3 +49,13 @@ describe("spaced repetition", () => {
     const result = review(newCardState(now), 0, now);
     expect(result.lapses).toBe(1);
     expect(result.due).toBe(now + 60_000);
+  });
+
+  it("advances a well-known card and reports mastery", () => {
+    const now = 1_000_000;
+    const first = review(newCardState(now), 3, now);
+    const second = review(first, 3, now);
+    expect(second.interval).toBe(6);
+    expect(masteryPercent([second, newCardState(now)])).toBe(50);
+  });
+});
