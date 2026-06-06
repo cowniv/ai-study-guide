@@ -6,3 +6,10 @@ export interface Persona {
   blurb: string;
   /** system prompt voice */
   voice: string;
+}
+
+export const PERSONAS: Persona[] = [
+  {
+    id: "tutor",
+    name: "Patient tutor",
+    blurb: "Slow, step by step, checks that you're following.",
