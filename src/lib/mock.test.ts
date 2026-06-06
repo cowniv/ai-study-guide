@@ -29,3 +29,13 @@ describe("mock mode", () => {
     expect(ExplainInput.safeParse({ notes: input, persona: "coach" }).success).toBe(true);
     expect(mockExplanation(input, getPersona("coach"))).toContain("here's what you actually need to know");
   });
+
+  it("streams the canned response without an external service", async () => {
+    const reader = streamText("safe local response", 0).getReader();
+    const decoder = new TextDecoder();
+    let output = "";
+    for (;;) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      output += decoder.decode(value, { stream: true });
+    }
