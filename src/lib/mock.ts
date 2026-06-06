@@ -39,3 +39,17 @@ export function mockStudySet(notes: string): StudySet {
   }));
   const quiz = lines.slice(0, 5).map((l, i) => {
     const others = lines.filter((x) => x !== l).slice(0, 3);
+    while (others.length < 3) others.push("None of the above");
+    const choices = [...others];
+    const answerIndex = i % 4;
+    choices.splice(answerIndex, 0, l);
+    return {
+      question: `Which statement appears as key idea #${i + 1} in your notes?`,
+      choices: choices.map((c) => c.slice(0, 90)),
+      answerIndex,
+      explanation: "This is the line taken straight from your notes (mock mode).",
+    };
+  });
+  return {
+    title: "Mock study set",
+    flashcards: cards.length ? cards : [{ front: "Add more notes", back: "Mock mode needs a few sentences." }],
