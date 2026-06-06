@@ -67,3 +67,16 @@ export function mockStudySet(notes: string): StudySet {
 }
 
 /** Stream a string out in small chunks so mock mode behaves like the real thing. */
+export function streamText(text: string, delayMs = 18): ReadableStream<Uint8Array> {
+  const enc = new TextEncoder();
+  const chunks = text.match(/\S+\s*/g) ?? [text];
+  return new ReadableStream({
+    async start(controller) {
+      for (const c of chunks) {
+        controller.enqueue(enc.encode(c));
+        await new Promise((r) => setTimeout(r, delayMs));
+      }
+      controller.close();
+    },
+  });
+}
