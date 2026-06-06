@@ -33,3 +33,9 @@ export function friendlyError(err: unknown): { status: number; message: string }
   }
   if (err instanceof Anthropic.APIConnectionError) {
     return { status: 503, message: "Couldn't reach the AI service. Check the connection and retry." };
+  }
+  if (err instanceof Anthropic.APIError) {
+    return { status: 502, message: "The AI service had a problem. Please retry." };
+  }
+  return { status: 500, message: "Something went wrong on our side." };
+}
