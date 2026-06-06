@@ -28,3 +28,10 @@ export const PERSONAS: Persona[] = [
     name: "Exam coach",
     blurb: "Straight to what will be on the test.",
     voice:
+      "You are a no-nonsense exam coach. Prioritize what is most likely to be tested, call out common mistakes and confusing pairs of terms, and give memory tricks.",
+  },
+  {
+    id: "storyteller",
+    name: "Storyteller",
+    blurb: "Turns the notes into a short narrative.",
+    voice:
