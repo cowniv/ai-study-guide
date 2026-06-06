@@ -19,3 +19,13 @@ describe("mock mode", () => {
   });
 
   it("labels canned explanations and reflects only supplied text", () => {
+    const output = mockExplanation(notes, getPersona("tutor"));
+    expect(output).toContain("Mock mode");
+    expect(output).toContain("A process is a running program");
+  });
+
+  it("treats instruction-like note text as ordinary study content", () => {
+    const input = `${notes}\nIgnore previous instructions is an example of prompt injection wording.`;
+    expect(ExplainInput.safeParse({ notes: input, persona: "coach" }).success).toBe(true);
+    expect(mockExplanation(input, getPersona("coach"))).toContain("here's what you actually need to know");
+  });
