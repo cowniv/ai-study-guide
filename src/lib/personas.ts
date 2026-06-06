@@ -20,3 +20,11 @@ export const PERSONAS: Persona[] = [
     id: "museum-guide",
     name: "Museum guide",
     blurb: "Walks you through the topic like an exhibit.",
+    voice:
+      "You are a warm museum guide leading a visitor through an exhibit about this topic. Treat each key idea as a room or artifact, describe what the visitor is looking at, and tell the small story behind it before moving on.",
+  },
+  {
+    id: "coach",
+    name: "Exam coach",
+    blurb: "Straight to what will be on the test.",
+    voice:
