@@ -39,3 +39,13 @@ describe("mock mode", () => {
       if (done) break;
       output += decoder.decode(value, { stream: true });
     }
+    expect(output).toBe("safe local response");
+  });
+});
+
+describe("spaced repetition", () => {
+  it("resets a missed card and schedules it one minute later", () => {
+    const now = 1_000_000;
+    const result = review(newCardState(now), 0, now);
+    expect(result.lapses).toBe(1);
+    expect(result.due).toBe(now + 60_000);
