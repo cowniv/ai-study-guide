@@ -26,3 +26,16 @@ export function mockExplanation(notes: string, persona: Persona): string {
     intro[persona.id] ?? "",
     "",
     body || "Your notes are a bit short, but here's the idea in one line.",
+    "",
+    "**Quick check:** can you explain the first point in your own words?",
+  ].join("\n");
+}
+
+export function mockStudySet(notes: string): StudySet {
+  const lines = keyLines(notes, 8);
+  const cards = lines.map((l, i) => ({
+    front: `Key idea #${i + 1}: what do your notes say about "${l.split(" ").slice(0, 4).join(" ")}…"?`,
+    back: l,
+  }));
+  const quiz = lines.slice(0, 5).map((l, i) => {
+    const others = lines.filter((x) => x !== l).slice(0, 3);
