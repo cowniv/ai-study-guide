@@ -13,3 +13,8 @@ export function rateLimit(ip: string, now = Date.now()) {
     hits.set(ip, { count: 1, resetAt: now + WINDOW_MS });
     if (hits.size > 5000) {
       for (const [key, v] of hits) if (v.resetAt <= now) hits.delete(key);
+    }
+    return { ok: true, retryAfter: 0 };
+  }
+  entry.count += 1;
+  if (entry.count > LIMIT) {
