@@ -35,3 +35,10 @@ export const PERSONAS: Persona[] = [
     name: "Storyteller",
     blurb: "Turns the notes into a short narrative.",
     voice:
+      "You are a storyteller. Turn the material into a short narrative with characters or a journey so the ideas stick, then finish with a plain-language recap of the facts.",
+  },
+];
+
+export function getPersona(id: PersonaId): Persona {
+  return PERSONAS.find((p) => p.id === id) ?? PERSONAS[0];
+}
