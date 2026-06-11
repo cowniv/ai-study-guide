@@ -17,3 +17,13 @@ export const NotesInput = z.object({
 export const ExplainInput = NotesInput.extend({
   persona: z.enum(PERSONA_IDS),
 });
+
+export const Flashcard = z.object({
+  front: z.string().describe("A question or term, one line"),
+  back: z.string().describe("The answer or definition, 1-3 sentences"),
+});
+
+export const QuizQuestion = z.object({
+  question: z.string(),
+  choices: z.array(z.string()).describe("Exactly 4 answer choices"),
+  answerIndex: z.number().int().describe("0-based index of the correct choice"),
