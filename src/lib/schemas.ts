@@ -27,3 +27,12 @@ export const QuizQuestion = z.object({
   question: z.string(),
   choices: z.array(z.string()).describe("Exactly 4 answer choices"),
   answerIndex: z.number().int().describe("0-based index of the correct choice"),
+  explanation: z.string().describe("Why the answer is correct, 1-2 sentences"),
+});
+
+export const StudySet = z.object({
+  title: z.string().describe("Short title for this study set"),
+  flashcards: z.array(Flashcard).describe("8 to 12 flashcards"),
+  quiz: z.array(QuizQuestion).describe("5 multiple-choice questions"),
+});
+
