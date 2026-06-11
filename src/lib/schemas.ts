@@ -36,3 +36,13 @@ export const StudySet = z.object({
   quiz: z.array(QuizQuestion).describe("5 multiple-choice questions"),
 });
 
+export type Flashcard = z.infer<typeof Flashcard>;
+export type QuizQuestion = z.infer<typeof QuizQuestion>;
+export type StudySet = z.infer<typeof StudySet>;
+
+/**
+ * Structured outputs guarantee the shape, but not every rule (like "exactly 4
+ * choices" or a valid answer index). This runs after parsing.
+ */
+export const StrictStudySet = StudySet.extend({
+  flashcards: z.array(Flashcard).min(1).max(20),
