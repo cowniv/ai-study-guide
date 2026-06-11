@@ -46,3 +46,12 @@ export type StudySet = z.infer<typeof StudySet>;
  */
 export const StrictStudySet = StudySet.extend({
   flashcards: z.array(Flashcard).min(1).max(20),
+  quiz: z
+    .array(
+      QuizQuestion.refine((q) => q.choices.length >= 2 && q.answerIndex >= 0 && q.answerIndex < q.choices.length, {
+        message: "answerIndex must point at one of the choices",
+      }),
+    )
+    .min(1)
+    .max(10),
+});
