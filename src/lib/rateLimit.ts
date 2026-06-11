@@ -18,3 +18,8 @@ export function rateLimit(ip: string, now = Date.now()) {
   }
   entry.count += 1;
   if (entry.count > LIMIT) {
+    return { ok: false, retryAfter: Math.ceil((entry.resetAt - now) / 1000) };
+  }
+  return { ok: true, retryAfter: 0 };
+}
+
