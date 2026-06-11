@@ -23,3 +23,7 @@ export function rateLimit(ip: string, now = Date.now()) {
   return { ok: true, retryAfter: 0 };
 }
 
+export function clientIp(req: Request): string {
+  const fwd = req.headers.get("x-forwarded-for");
+  return fwd?.split(",")[0]?.trim() || req.headers.get("x-real-ip") || "local";
+}
