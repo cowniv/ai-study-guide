@@ -15,3 +15,11 @@ export interface CardState {
 const DAY = 86_400_000;
 
 export const newCardState = (now = Date.now()): CardState => ({
+  ease: 2.5,
+  interval: 0,
+  reps: 0,
+  due: now,
+  lapses: 0,
+});
+
+export function review(state: CardState, grade: Grade, now = Date.now()): CardState {
