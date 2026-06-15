@@ -19,3 +19,10 @@ export function loadSets(): SavedSet[] {
     return raw ? (JSON.parse(raw) as SavedSet[]) : [];
   } catch {
     return [];
+  }
+}
+
+export function saveSets(sets: SavedSet[]) {
+  try {
+    localStorage.setItem(KEY, JSON.stringify(sets.slice(0, 20)));
+  } catch {
