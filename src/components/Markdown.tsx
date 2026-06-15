@@ -16,3 +16,12 @@ function inline(text: string): ReactNode[] {
   });
 }
 
+/** A tiny Markdown renderer for streamed text: headings, lists, paragraphs. */
+export function Markdown({ text }: { text: string }) {
+  const blocks: ReactNode[] = [];
+  let list: string[] = [];
+  const flush = () => {
+    if (list.length) {
+      blocks.push(
+        <ul key={blocks.length} className="ml-5 list-disc space-y-1">
+          {list.map((l, i) => (
