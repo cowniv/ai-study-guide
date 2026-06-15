@@ -26,3 +26,10 @@ export function saveSets(sets: SavedSet[]) {
   try {
     localStorage.setItem(KEY, JSON.stringify(sets.slice(0, 20)));
   } catch {
+    // storage full or blocked; the session still works in memory
+  }
+}
+
+export function createSavedSet(studySet: StudySet): SavedSet {
+  return {
+    id: crypto.randomUUID(),
