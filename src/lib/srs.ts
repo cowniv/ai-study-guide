@@ -23,3 +23,12 @@ export const newCardState = (now = Date.now()): CardState => ({
 });
 
 export function review(state: CardState, grade: Grade, now = Date.now()): CardState {
+  if (grade === 0) {
+    return {
+      ...state,
+      reps: 0,
+      interval: 0,
+      lapses: state.lapses + 1,
+      ease: Math.max(1.3, state.ease - 0.2),
+      due: now + 60_000, // see it again in a minute
+    };
