@@ -14,3 +14,19 @@ const GRADES: { grade: Grade; label: string; key: string }[] = [
 export function Flashcards({ set, onChange }: { set: SavedSet; onChange: (s: SavedSet) => void }) {
   const [flipped, setFlipped] = useState(false);
   const [now, setNow] = useState(() => Date.now());
+
+  const dueIndexes = useMemo(
+    () =>
+      set.cards
+        .map((c, i) => ({ c, i }))
+        .filter(({ c }) => c.due <= now)
+        .sort((a, b) => a.c.due - b.c.due)
+        .map(({ i }) => i),
+    [set.cards, now],
+  );
+  const current = dueIndexes[0];
+  const card = current !== undefined ? set.studySet.flashcards[current] : undefined;
+
+  function grade(g: Grade) {
+    if (current === undefined) return;
+    const cards = set.cards.map((c, i) => (i === current ? review(c, g) : c));
