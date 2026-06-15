@@ -78,3 +78,18 @@ export function Flashcards({ set, onChange }: { set: SavedSet; onChange: (s: Sav
               </button>
             ))}
           </div>
+        </>
+      ) : (
+        <div className="card text-center">
+          <p className="font-semibold">All caught up.</p>
+          <p className="text-sm text-stone-600">
+            No cards are due right now. Come back later; harder cards will show up sooner.
+          </p>
+          <button type="button" className="btn btn-ghost mt-3" onClick={() => setNow(Date.now())}>
+            Check again
+          </button>
+        </div>
+      )}
+    </div>
+  );
+}
