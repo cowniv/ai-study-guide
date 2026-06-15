@@ -12,3 +12,10 @@ export interface SavedSet {
 }
 
 const KEY = "study-guide:sets:v1";
+
+export function loadSets(): SavedSet[] {
+  try {
+    const raw = localStorage.getItem(KEY);
+    return raw ? (JSON.parse(raw) as SavedSet[]) : [];
+  } catch {
+    return [];
