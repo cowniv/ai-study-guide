@@ -62,3 +62,19 @@ export function Flashcards({ set, onChange }: { set: SavedSet; onChange: (s: Sav
             <div className={`flip-inner relative h-full ${flipped ? "flipped" : ""}`}>
               <div className="flip-face card absolute inset-0 grid place-items-center text-center font-serif text-xl">
                 {card.front}
+              </div>
+              <div className="flip-face flip-back card absolute inset-0 grid place-items-center bg-accent-soft text-center">
+                {card.back}
+              </div>
+            </div>
+          </button>
+          <p className="text-center text-xs text-stone-500">
+            {flipped ? "How well did you know it? (keys 1–4)" : "Click the card to reveal the answer"}
+          </p>
+          <div className="grid grid-cols-4 gap-2">
+            {GRADES.map((g) => (
+              <button type="button" key={g.grade} className="btn btn-ghost" disabled={!flipped} onClick={() => grade(g.grade)}>
+                {g.label}
+              </button>
+            ))}
+          </div>
