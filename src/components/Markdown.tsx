@@ -25,3 +25,12 @@ export function Markdown({ text }: { text: string }) {
       blocks.push(
         <ul key={blocks.length} className="ml-5 list-disc space-y-1">
           {list.map((l, i) => (
+            <li key={i}>{inline(l)}</li>
+          ))}
+        </ul>,
+      );
+      list = [];
+    }
+  };
+  for (const raw of text.split("\n")) {
+    const line = raw.trimEnd();
