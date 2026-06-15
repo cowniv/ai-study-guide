@@ -30,3 +30,19 @@ export function Flashcards({ set, onChange }: { set: SavedSet; onChange: (s: Sav
   function grade(g: Grade) {
     if (current === undefined) return;
     const cards = set.cards.map((c, i) => (i === current ? review(c, g) : c));
+    onChange({ ...set, cards });
+    setFlipped(false);
+    setNow(Date.now());
+  }
+
+  return (
+    <div className="flex flex-col gap-4">
+      <div className="flex items-center justify-between text-sm text-stone-600">
+        <span>
+          {dueIndexes.length} due · {set.cards.length} cards
+        </span>
+        <span>Mastery {masteryPercent(set.cards)}%</span>
+      </div>
+      <div className="h-2 overflow-hidden rounded-full bg-stone-200" aria-hidden>
+        <div className="h-full bg-accent transition-all" style={{ width: `${masteryPercent(set.cards)}%` }} />
+      </div>
