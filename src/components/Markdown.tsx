@@ -43,3 +43,12 @@ export function Markdown({ text }: { text: string }) {
     const h = line.match(/^(#{1,3})\s+(.*)/);
     if (h) {
       const cls = h[1].length === 1 ? "text-xl" : h[1].length === 2 ? "text-lg" : "text-base";
+      const tag = `h${h[1].length + 1}` as "h2" | "h3" | "h4";
+      blocks.push(createElement(tag, { key: blocks.length, className: `${cls} mt-2 font-serif font-bold` }, inline(h[2])));
+    } else if (line.trim()) {
+      blocks.push(<p key={blocks.length}>{inline(line)}</p>);
+    }
+  }
+  flush();
+  return <div className="space-y-3 leading-relaxed">{blocks}</div>;
+}
