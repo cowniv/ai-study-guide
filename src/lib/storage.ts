@@ -33,3 +33,9 @@ export function saveSets(sets: SavedSet[]) {
 export function createSavedSet(studySet: StudySet): SavedSet {
   return {
     id: crypto.randomUUID(),
+    createdAt: Date.now(),
+    studySet,
+    cards: studySet.flashcards.map(() => newCardState()),
+    quizScores: [],
+  };
+}
