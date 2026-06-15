@@ -32,3 +32,11 @@ export function review(state: CardState, grade: Grade, now = Date.now()): CardSt
       ease: Math.max(1.3, state.ease - 0.2),
       due: now + 60_000, // see it again in a minute
     };
+  }
+  const reps = state.reps + 1;
+  let interval: number;
+  if (reps === 1) interval = grade === 3 ? 3 : 1;
+  else if (reps === 2) interval = grade === 1 ? 3 : 6;
+  else interval = Math.round(state.interval * state.ease * (grade === 1 ? 0.6 : grade === 3 ? 1.3 : 1));
+
+  const ease = Math.max(1.3, state.ease + (grade === 1 ? -0.15 : grade === 3 ? 0.15 : 0));
