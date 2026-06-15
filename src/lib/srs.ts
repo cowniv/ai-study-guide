@@ -40,3 +40,11 @@ export function review(state: CardState, grade: Grade, now = Date.now()): CardSt
   else interval = Math.round(state.interval * state.ease * (grade === 1 ? 0.6 : grade === 3 ? 1.3 : 1));
 
   const ease = Math.max(1.3, state.ease + (grade === 1 ? -0.15 : grade === 3 ? 0.15 : 0));
+  return { ...state, reps, interval, ease, due: now + interval * DAY };
+}
+
+export function masteryPercent(states: CardState[]): number {
+  if (!states.length) return 0;
+  const learned = states.filter((s) => s.interval >= 6).length;
+  return Math.round((learned / states.length) * 100);
+}
