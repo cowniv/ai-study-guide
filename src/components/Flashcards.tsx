@@ -46,3 +46,19 @@ export function Flashcards({ set, onChange }: { set: SavedSet; onChange: (s: Sav
       <div className="h-2 overflow-hidden rounded-full bg-stone-200" aria-hidden>
         <div className="h-full bg-accent transition-all" style={{ width: `${masteryPercent(set.cards)}%` }} />
       </div>
+
+      {card ? (
+        <>
+          <button
+            type="button"
+            className="flip h-56 w-full text-left"
+            onClick={() => setFlipped((f) => !f)}
+            aria-label={flipped ? "Show question" : "Show answer"}
+            onKeyDown={(e) => {
+              const g = GRADES.find((x) => x.key === e.key);
+              if (g && flipped) grade(g.grade);
+            }}
+          >
+            <div className={`flip-inner relative h-full ${flipped ? "flipped" : ""}`}>
+              <div className="flip-face card absolute inset-0 grid place-items-center text-center font-serif text-xl">
+                {card.front}
