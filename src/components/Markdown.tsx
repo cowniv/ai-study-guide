@@ -34,3 +34,12 @@ export function Markdown({ text }: { text: string }) {
   };
   for (const raw of text.split("\n")) {
     const line = raw.trimEnd();
+    const li = line.match(/^\s*(?:[-*]|\d+\.)\s+(.*)/);
+    if (li) {
+      list.push(li[1]);
+      continue;
+    }
+    flush();
+    const h = line.match(/^(#{1,3})\s+(.*)/);
+    if (h) {
+      const cls = h[1].length === 1 ? "text-xl" : h[1].length === 2 ? "text-lg" : "text-base";
