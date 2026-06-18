@@ -40,3 +40,17 @@ export function Quiz({ set, onChange }: { set: SavedSet; onChange: (s: SavedSet)
             const correct = q.answerIndex === ci;
             const state = submitted
               ? correct
+                ? "border-emerald-500 bg-emerald-50"
+                : chosen
+                  ? "border-rose-400 bg-rose-50"
+                  : "border-stone-200"
+              : chosen
+                ? "border-accent bg-accent-soft"
+                : "border-stone-200 hover:border-stone-300";
+            return (
+              <label key={ci} className={`flex cursor-pointer items-start gap-2 rounded-xl border px-3 py-2 text-sm ${state}`}>
+                <input
+                  type="radio"
+                  name={`q${qi}`}
+                  className="mt-0.5 accent-accent"
+                  checked={chosen}
