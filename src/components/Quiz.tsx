@@ -26,3 +26,17 @@ export function Quiz({ set, onChange }: { set: SavedSet; onChange: (s: SavedSet)
     <div className="flex flex-col gap-4">
       {set.quizScores.length > 0 && (
         <p className="text-sm text-stone-600">
+          Attempts: {set.quizScores.length} · Best: {best}/{questions.length}
+        </p>
+      )}
+      {questions.map((q, qi) => (
+        <fieldset key={qi} className="card flex flex-col gap-2">
+          <legend className="sr-only">Question {qi + 1}</legend>
+          <p className="font-semibold">
+            {qi + 1}. {q.question}
+          </p>
+          {q.choices.map((choice, ci) => {
+            const chosen = answers[qi] === ci;
+            const correct = q.answerIndex === ci;
+            const state = submitted
+              ? correct
