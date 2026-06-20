@@ -10,3 +10,9 @@
     ]
   },
   "linter": {
+    "enabled": true,
+    "rules": {
+      "preset": "recommended"
+    }
+  },
+  "css": {
