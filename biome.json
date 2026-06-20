@@ -4,3 +4,9 @@
     "includes": [
       "src/**",
       "*.{js,mjs,ts,json}",
+      "!package-lock.json",
+      "!.next",
+      "!node_modules"
+    ]
+  },
+  "linter": {
