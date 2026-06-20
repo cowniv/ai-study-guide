@@ -54,3 +54,17 @@ export function Quiz({ set, onChange }: { set: SavedSet; onChange: (s: SavedSet)
                   name={`q${qi}`}
                   className="mt-0.5 accent-accent"
                   checked={chosen}
+                  disabled={submitted}
+                  onChange={() => setAnswers((a) => a.map((x, i) => (i === qi ? ci : x)))}
+                />
+                {choice}
+              </label>
+            );
+          })}
+          {submitted && <p className="text-sm text-stone-600">{q.explanation}</p>}
+        </fieldset>
+      ))}
+      {submitted ? (
+        <div className="flex items-center gap-3" role="status">
+          <p className="font-semibold">
+            Score: {score}/{questions.length}
