@@ -68,3 +68,16 @@ export function Quiz({ set, onChange }: { set: SavedSet; onChange: (s: SavedSet)
         <div className="flex items-center gap-3" role="status">
           <p className="font-semibold">
             Score: {score}/{questions.length}
+          </p>
+          <button type="button" className="btn btn-ghost" onClick={retry}>
+            Try again
+          </button>
+        </div>
+      ) : (
+        <button type="button" className="btn btn-primary self-start" onClick={submit} disabled={answers.some((a) => a === null)}>
+          Check answers
+        </button>
+      )}
+    </div>
+  );
+}
