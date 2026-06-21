@@ -16,3 +16,9 @@
     }
   },
   "css": {
+    "parser": {
+      "tailwindDirectives": true
+    }
+  },
+  "overrides": [
+    {
