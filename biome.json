@@ -22,3 +22,9 @@
   },
   "overrides": [
     {
+      "includes": ["src/components/Markdown.tsx", "src/components/Quiz.tsx"],
+      "linter": {
+        "rules": {
+          "suspicious": {
+            "noArrayIndexKey": "off"
+          }
