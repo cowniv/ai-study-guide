@@ -6,3 +6,5 @@ export const metadata: Metadata = {
   description: "Turn your notes into an explanation, flashcards and a quiz.",
 };
 
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
