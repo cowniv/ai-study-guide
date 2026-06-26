@@ -71,3 +71,17 @@ export async function POST(req: Request) {
           controller.enqueue(enc.encode("\n\n[Explanation was cut off.]"));
         }
         controller.close();
+      } catch (err) {
+        const { message } = friendlyError(err);
+        // headers are already sent, so report the error in-band
+        controller.enqueue(enc.encode(`\n\n[Error: ${message}]`));
+        controller.close();
+      }
+    },
+    cancel() {
+      stream.abort();
+    },
+  });
+
+  return new Response(readable, { headers });
+}
