@@ -9,3 +9,13 @@ export const dynamic = "force-dynamic";
 
 export async function POST(req: Request) {
   const limit = rateLimit(clientIp(req));
+  if (!limit.ok) {
+    return Response.json(
+      { error: `Too many requests. Try again in ${limit.retryAfter}s.` },
+      { status: 429, headers: { "Retry-After": String(limit.retryAfter) } },
+    );
+  }
+
+  let body: unknown;
+  try {
+    body = await req.json();
