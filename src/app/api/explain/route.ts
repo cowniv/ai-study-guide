@@ -56,3 +56,18 @@ export async function POST(req: Request) {
   });
 
   const enc = new TextEncoder();
+  const readable = new ReadableStream<Uint8Array>({
+    async start(controller) {
+      try {
+        for await (const event of stream) {
+          if (event.type === "content_block_delta" && event.delta.type === "text_delta") {
+            controller.enqueue(enc.encode(event.delta.text));
+          }
+        }
+        const final = await stream.finalMessage();
+        if (final.stop_reason === "refusal") {
+          controller.enqueue(enc.encode("\n\n[The model declined to explain these notes.]"));
+        } else if (final.stop_reason === "max_tokens") {
+          controller.enqueue(enc.encode("\n\n[Explanation was cut off.]"));
+        }
+        controller.close();
