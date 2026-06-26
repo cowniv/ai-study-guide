@@ -27,3 +27,18 @@ export async function POST(req: Request) {
   const parsed = ExplainInput.safeParse(body);
   if (!parsed.success) {
     return json(400, { error: parsed.error.issues[0]?.message ?? "Invalid input." });
+  }
+  const { notes, persona: personaId } = parsed.data;
+  const persona = getPersona(personaId);
+
+  const headers = {
+    "Content-Type": "text/plain; charset=utf-8",
+    "Cache-Control": "no-store",
+    "X-Mock-Mode": String(isMockMode()),
+  };
+
+  if (isMockMode()) {
+    return new Response(streamText(mockExplanation(notes, persona)), { headers });
+  }
+
+  const stream = getClient().beta.messages.stream({
