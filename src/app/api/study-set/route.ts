@@ -19,3 +19,14 @@ export async function POST(req: Request) {
   let body: unknown;
   try {
     body = await req.json();
+  } catch {
+    return Response.json({ error: "Expected a JSON body." }, { status: 400 });
+  }
+  const parsed = NotesInput.safeParse(body);
+  if (!parsed.success) {
+    return Response.json({ error: parsed.error.issues[0]?.message ?? "Invalid input." }, { status: 400 });
+  }
+  const { notes } = parsed.data;
+
+  if (isMockMode()) {
+    return Response.json({ studySet: mockStudySet(notes), mock: true });
