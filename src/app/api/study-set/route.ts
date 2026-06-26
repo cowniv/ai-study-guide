@@ -51,3 +51,13 @@ export async function POST(req: Request) {
     }
     const checked = StrictStudySet.safeParse(response.parsed_output);
     if (!checked.success) {
+      return Response.json({ error: "The generated study set was incomplete. Please try again." }, { status: 502 });
+    }
+    return Response.json({ studySet: checked.data, mock: false });
+  } catch (err) {
+    const { status, message } = friendlyError(err);
+    // Keep student notes and request payloads out of server logs.
+    console.error("[study-set]", err instanceof Error ? err.name : "UnknownError");
+    return Response.json({ error: message }, { status });
+  }
+}
