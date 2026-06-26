@@ -30,3 +30,13 @@ export async function POST(req: Request) {
 
   if (isMockMode()) {
     return Response.json({ studySet: mockStudySet(notes), mock: true });
+  }
+
+  try {
+    const response = await getClient().beta.messages.parse({
+      model: MODEL,
+      max_tokens: 16000,
+      betas: [FALLBACK_BETA],
+      fallbacks: "default",
+      output_config: { effort: "medium", format: betaZodOutputFormat(StudySet) },
+      system:
