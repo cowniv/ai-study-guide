@@ -93,3 +93,50 @@ export default function Home() {
       }
     } catch (err) {
       if ((err as Error).name !== "AbortError") setExplainError("Connection lost while streaming. Try again.");
+    } finally {
+      setExplaining(false);
+    }
+  }
+
+  async function generate() {
+    setGenerating(true);
+    setSetError("");
+    try {
+      const res = await fetch("/api/study-set", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ notes }),
+      });
+      if (!res.ok) {
+        setSetError(await readError(res));
+        return;
+      }
+      const data = (await res.json()) as { studySet: StudySet; mock: boolean };
+      setMock(data.mock);
+      const saved = createSavedSet(data.studySet);
+      const all = [saved, ...sets];
+      setSets(all);
+      saveSets(all);
+      setActiveId(saved.id);
+      setTab("cards");
+    } catch {
+      setSetError("Couldn't reach the server. Check your connection.");
+    } finally {
+      setGenerating(false);
+    }
+  }
+
+  function removeSet(id: string) {
+    const all = sets.filter((s) => s.id !== id);
+    setSets(all);
+    saveSets(all);
+    if (activeId === id) setActiveId(all[0]?.id ?? null);
+  }
+
+  return (
+    <main className="mx-auto grid max-w-6xl gap-6 px-4 py-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)]">
+      <section className="flex flex-col gap-4">
+        <header>
+          <h1 className="font-serif text-3xl font-bold">Study Guide</h1>
+          <p className="text-stone-600">Paste your notes, pick a guide, and get an explanation, flashcards and a quiz.</p>
+        </header>
