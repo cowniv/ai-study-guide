@@ -17,3 +17,22 @@ My student version: paste your notes (or upload a `.txt`/`.md` file), pick who e
 
 ### Tech
 Next.js 15 (App Router, Route Handlers, streaming `Response`) · React 19 · TypeScript · Anthropic TypeScript SDK (`@anthropic-ai/sdk`, Claude Opus 5.5, structured outputs) · Zod · Tailwind CSS v4
+
+### Run
+```bash
+npm install
+cp .env.example .env.local   # add ANTHROPIC_API_KEY, or leave it empty for mock mode
+npm run dev
+npm test
+npm run lint
+```
+Open http://localhost:3000.
+
+### What I practiced
+- Streaming a model response through a route handler into a `ReadableStream`, and reading it on the client with `getReader()`
+- Structured outputs with a Zod schema, and why I still validate after parsing
+- Keeping secrets on the server (`server-only`, no `NEXT_PUBLIC_` key)
+- Rate limiting, input limits and turning SDK errors into messages a student can act on
+- Treating pasted notes as data, not instructions, in the prompt
+- A small spaced-repetition scheduler and persisting progress in localStorage
+- Designing a mock mode so the app can be demoed and graded without paying for API calls
