@@ -234,3 +234,50 @@ export default function Home() {
                 <p className="text-sm text-stone-500">{explaining ? "Thinking…" : "Your explanation will stream in here."}</p>
               )
             )}
+          </div>
+        )}
+
+        {tab !== "explain" && (
+          <>
+            {setError && <p className="text-sm text-rose-600">{setError}</p>}
+            {sets.length > 0 && (
+              <div className="flex flex-wrap items-center gap-2">
+                <label htmlFor="set" className="text-sm font-semibold">
+                  Study set
+                </label>
+                <select
+                  id="set"
+                  className="rounded-xl border border-stone-300 bg-white px-3 py-2 text-sm"
+                  value={activeId ?? ""}
+                  onChange={(e) => setActiveId(e.target.value)}
+                >
+                  {sets.map((s) => (
+                    <option key={s.id} value={s.id}>
+                      {s.studySet.title} · {new Date(s.createdAt).toLocaleDateString()}
+                    </option>
+                  ))}
+                </select>
+                {active && (
+                  <button type="button" className="text-sm text-stone-500 underline hover:text-rose-600" onClick={() => removeSet(active.id)}>
+                    Delete
+                  </button>
+                )}
+              </div>
+            )}
+            {active ? (
+              tab === "cards" ? (
+                <Flashcards key={active.id} set={active} onChange={updateSet} />
+              ) : (
+                <Quiz key={active.id} set={active} onChange={updateSet} />
+              )
+            ) : (
+              <div className="card text-sm text-stone-500">
+                No study sets yet. Paste notes and click <strong>Make flashcards + quiz</strong>.
+              </div>
+            )}
+          </>
+        )}
+      </section>
+    </main>
+  );
+}
