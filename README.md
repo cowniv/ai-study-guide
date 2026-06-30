@@ -11,3 +11,9 @@ My student version: paste your notes (or upload a `.txt`/`.md` file), pick who e
 - Flashcards + a 5-question quiz returned as **structured JSON**, validated with **Zod** (once by the SDK, then again with stricter rules like "the answer index must point at a real choice")
 - Study sessions with SM-2 style **spaced-repetition** scoring (Again / Hard / Good / Easy, keys 1–4), mastery bar and quiz history, all saved in **localStorage**
 - The Anthropic API is only called from **server route handlers**; the key is read from env and never sent to the browser
+- Input limits (40–20,000 characters, text files only), a simple **per-IP rate limit**, and friendly error messages for rate limits, bad requests and connection problems
+- Stop button that cancels the stream (and the upstream request)
+- **Mock mode**: with no `ANTHROPIC_API_KEY`, both routes return canned responses built from your notes, so the whole app runs without a key
+
+### Tech
+Next.js 15 (App Router, Route Handlers, streaming `Response`) · React 19 · TypeScript · Anthropic TypeScript SDK (`@anthropic-ai/sdk`, Claude Opus 5.5, structured outputs) · Zod · Tailwind CSS v4
