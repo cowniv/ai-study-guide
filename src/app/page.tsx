@@ -187,3 +187,50 @@ export default function Home() {
             {explaining ? "Explaining…" : "Explain my notes"}
           </button>
           <button type="button" className="btn btn-ghost" onClick={generate} disabled={tooShort || tooLong || generating}>
+            {generating ? "Building study set…" : "Make flashcards + quiz"}
+          </button>
+          {explaining && (
+            <button type="button" className="btn btn-ghost" onClick={() => abortRef.current?.abort()}>
+              Stop
+            </button>
+          )}
+        </div>
+        {mock && (
+          <p className="rounded-xl bg-amber-50 px-3 py-2 text-xs text-amber-800">
+            Running in mock mode (no API key on the server), so responses are canned.
+          </p>
+        )}
+      </section>
+
+      <section className="flex flex-col gap-4">
+        <div role="tablist" aria-label="Study views" className="flex gap-2">
+          {(
+            [
+              ["explain", "Explanation"],
+              ["cards", "Flashcards"],
+              ["quiz", "Quiz"],
+            ] as [Tab, string][]
+          ).map(([id, label]) => (
+            <button
+              type="button"
+              key={id}
+              role="tab"
+              aria-selected={tab === id}
+              className={`btn ${tab === id ? "btn-primary" : "btn-ghost"}`}
+              onClick={() => setTab(id)}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
+
+        {tab === "explain" && (
+          <div className="card min-h-64" aria-live="polite" aria-busy={explaining}>
+            {explainError && <p className="text-sm text-rose-600">{explainError}</p>}
+            {explanation ? (
+              <Markdown text={explanation} />
+            ) : (
+              !explainError && (
+                <p className="text-sm text-stone-500">{explaining ? "Thinking…" : "Your explanation will stream in here."}</p>
+              )
+            )}
