@@ -24,3 +24,9 @@ npm install
 cp .env.example .env.local   # add ANTHROPIC_API_KEY, or leave it empty for mock mode
 npm run dev
 npm test
+npm run lint
+```
+Open http://localhost:3000.
+
+### What I practiced
+- Streaming a model response through a route handler into a `ReadableStream`, and reading it on the client with `getReader()`
