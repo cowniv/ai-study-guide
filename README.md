@@ -17,3 +17,10 @@ My student version: paste your notes (or upload a `.txt`/`.md` file), pick who e
 
 ### Tech
 Next.js 15 (App Router, Route Handlers, streaming `Response`) · React 19 · TypeScript · Anthropic TypeScript SDK (`@anthropic-ai/sdk`, Claude Opus 5.5, structured outputs) · Zod · Tailwind CSS v4
+
+### Run
+```bash
+npm install
+cp .env.example .env.local   # add ANTHROPIC_API_KEY, or leave it empty for mock mode
+npm run dev
+npm test
