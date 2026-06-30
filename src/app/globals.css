@@ -24,3 +24,11 @@ body {
     @apply bg-accent text-white hover:bg-accent/90;
   }
   .btn-ghost {
+    @apply border border-stone-300 bg-white hover:bg-stone-50;
+  }
+}
+
+.flip {
+  perspective: 1000px;
+}
+.flip-inner {
