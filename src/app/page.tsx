@@ -140,3 +140,50 @@ export default function Home() {
           <h1 className="font-serif text-3xl font-bold">Study Guide</h1>
           <p className="text-stone-600">Paste your notes, pick a guide, and get an explanation, flashcards and a quiz.</p>
         </header>
+
+        <div className="card flex flex-col gap-3">
+          <label htmlFor="notes" className="text-sm font-semibold">
+            Your notes
+          </label>
+          <textarea
+            id="notes"
+            className="min-h-64 rounded-xl border border-stone-300 p-3 text-sm outline-none focus:border-accent focus:ring-2 focus:ring-accent/20"
+            placeholder="Paste lecture notes, a reviewer, or a chapter summary…"
+            value={notes}
+            onChange={(e) => setNotes(e.target.value)}
+            aria-describedby="notes-help"
+          />
+          <div id="notes-help" className="flex flex-wrap items-center justify-between gap-2 text-xs text-stone-500">
+            <span className={tooLong ? "font-semibold text-rose-600" : ""}>
+              {notes.length.toLocaleString()} / {MAX_NOTES_CHARS.toLocaleString()} characters
+            </span>
+            <label className="btn btn-ghost cursor-pointer py-1 text-xs">
+              Upload .txt / .md
+              <input type="file" accept=".txt,.md,.markdown,text/plain,text/markdown" className="sr-only" onChange={(e) => onFile(e.target.files?.[0])} />
+            </label>
+          </div>
+        </div>
+
+        <fieldset className="card">
+          <legend className="mb-2 text-sm font-semibold">Explain it like a…</legend>
+          <div className="grid gap-2 sm:grid-cols-2">
+            {PERSONAS.map((p) => (
+              <label
+                key={p.id}
+                className={`cursor-pointer rounded-xl border p-3 text-sm ${
+                  persona === p.id ? "border-accent bg-accent-soft" : "border-stone-200 hover:border-stone-300"
+                }`}
+              >
+                <input type="radio" name="persona" value={p.id} className="sr-only" checked={persona === p.id} onChange={() => setPersona(p.id)} />
+                <span className="block font-semibold">{p.name}</span>
+                <span className="text-stone-600">{p.blurb}</span>
+              </label>
+            ))}
+          </div>
+        </fieldset>
+
+        <div className="flex flex-wrap gap-2">
+          <button type="button" className="btn btn-primary" onClick={explain} disabled={tooShort || tooLong || explaining}>
+            {explaining ? "Explaining…" : "Explain my notes"}
+          </button>
+          <button type="button" className="btn btn-ghost" onClick={generate} disabled={tooShort || tooLong || generating}>
