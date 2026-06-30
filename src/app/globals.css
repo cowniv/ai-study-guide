@@ -41,3 +41,11 @@ body {
 .flip-face {
   backface-visibility: hidden;
 }
+.flip-back {
+  transform: rotateY(180deg);
+}
+@media (prefers-reduced-motion: reduce) {
+  .flip-inner {
+    transition: none;
+  }
+}
