@@ -30,3 +30,9 @@ Open http://localhost:3000.
 
 ### What I practiced
 - Streaming a model response through a route handler into a `ReadableStream`, and reading it on the client with `getReader()`
+- Structured outputs with a Zod schema, and why I still validate after parsing
+- Keeping secrets on the server (`server-only`, no `NEXT_PUBLIC_` key)
+- Rate limiting, input limits and turning SDK errors into messages a student can act on
+- Treating pasted notes as data, not instructions, in the prompt
+- A small spaced-repetition scheduler and persisting progress in localStorage
+- Designing a mock mode so the app can be demoed and graded without paying for API calls
